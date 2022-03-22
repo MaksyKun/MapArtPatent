@@ -1,0 +1,6 @@
+name: MapArtPatent
+version: '${project.version}'
+main: net.maksy.mapartpatent.MapArtPatent
+api-version: 1.18
+authors: [ MaksyKun ]
+description: Claim your created MapArts

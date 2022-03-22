@@ -1,0 +1,28 @@
+Gui:
+  Title: "MapArt Patentschutz"
+
+  #States for Button-Settings
+  States:
+    Active: "&7[&aAktiviert&7]"
+    Unactive: "&7[&cDeaktiviert&7]"
+
+  Buttons:
+    Confirm:
+      Display: "&7[&aBestätigen&7]"
+      Lore:
+        - "&7Kosten: &a<costs>"
+    Insert:
+      Display: "&7MapArt einlegen"
+      Lore: []
+    Craftability:
+      Costs: 2000
+      Display: "&9Replizierbarkeit"
+      Lore:
+        - "&7Das MapArt kann geklont werden: "
+        - "&7- <state>"
+    Usability:
+      Costs: 1000
+      Display: "&9Nutzbarkeit"
+      Lore:
+        - "&7Das MapArt kann verwendet werden: "
+        - "&7<state>"
