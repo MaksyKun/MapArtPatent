@@ -61,7 +61,7 @@ public class Utils {
         return item;
     }
 
-    public static ItemStack getSkull(String texture, Component name, boolean glowing, Component lore) {
+    public static ItemStack getSkull(String texture, Component name, boolean glowing, List<Component> lore) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta itemMeta = (SkullMeta) item.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
@@ -80,7 +80,9 @@ public class Utils {
         }
 
         if (lore != null) {
-            itemMeta.lore(List.of(lore));
+            if (!lore.isEmpty()) {
+                itemMeta.lore(lore);
+            }
         }
 
         if (glowing) {

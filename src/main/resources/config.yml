@@ -26,3 +26,6 @@ Gui:
       Lore:
         - "&7Das MapArt kann verwendet werden: "
         - "&7<state>"
+    Exit:
+      Display: "&cAbbrechen"
+      Lore: []
