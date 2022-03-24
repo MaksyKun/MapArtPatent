@@ -4,3 +4,17 @@ main: net.maksy.mapartpatent.MapArtPatent
 api-version: 1.18
 authors: [ MaksyKun ]
 description: Claim your created MapArts
+depend: [Vault]
+
+commands:
+  mapart:
+    description: Use the PatentGui
+    usage: /mapart
+
+permissions:
+  mapart.use:
+    description: Allow /mapart usage
+    default: true
+  mapart.reload:
+    description: Reload the MapArtPatent Config
+    default: op

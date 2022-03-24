@@ -1,4 +1,4 @@
-package net.maksy.mapartpatent;
+package net.maksy.mapartpatent.enums;
 
 public enum ConfigValue {
     GUI_TITLE("Gui.Title"),
@@ -21,7 +21,16 @@ public enum ConfigValue {
     BUTTON_USABILITY_COSTS("Gui.Buttons.Usability.Costs"),
 
     BUTTON_EXIT_DISPLAY("Gui.Buttons.Exit.Display"),
-    BUTTON_EXIT_LORE("Gui.Buttons.Exit.Lore");
+    BUTTON_EXIT_LORE("Gui.Buttons.Exit.Lore"),
+
+    MAPART_LORE("MapArt.Lore"),
+
+    LANG_NO_PERMISSION("Language.no_permission"),
+    LANG_NO_MAPART("Language.no_mapart"),
+    LANG_NOT_ALLOWED("Language.not_allowed"),
+    LANG_NOT_ENOUGH_MONEY("Language.not_enough_money"),
+    LANG_INVENTORY_FULL("Language.inventory_full"),
+    LANG_FINISH("Language.finish");
 
     private final String path;
 

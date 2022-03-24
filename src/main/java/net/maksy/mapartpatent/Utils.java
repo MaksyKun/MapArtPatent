@@ -86,8 +86,8 @@ public class Utils {
         }
 
         if (glowing) {
-            meta.addEnchant(Enchantment.DURABILITY, 1, false);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemMeta.addEnchant(Enchantment.DURABILITY, 1, false);
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
 
         item.setItemMeta(itemMeta);

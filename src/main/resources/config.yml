@@ -1,31 +1,52 @@
 Gui:
-  Title: "MapArt Patentschutz"
+  Title: "MapArt Patenting"
 
   #States for Button-Settings
   States:
-    Active: "&7[&aAktiviert&7]"
-    Unactive: "&7[&cDeaktiviert&7]"
+    Active: "&7[&aActivated&7]"
+    Unactive: "&7[&cDeactivated&7]"
 
+  #Button-Translations
   Buttons:
     Confirm:
-      Display: "&7[&aBestätigen&7]"
+      Display: "&7[&aConfirm&7]"
       Lore:
-        - "&7Kosten: &a<costs>"
+        - "&7Total costs: &a<costs>"
     Insert:
-      Display: "&7MapArt einlegen"
+      Display: "&aInsert MapArt"
       Lore: []
     Craftability:
       Costs: 2000
-      Display: "&9Replizierbarkeit"
+      Display: "&9Prevent Copy"
       Lore:
-        - "&7Das MapArt kann geklont werden: "
-        - "&7- <state>"
+        - "<state>"
+        - " "
+        - "&7Costs: &a<costs>"
     Usability:
       Costs: 1000
-      Display: "&9Nutzbarkeit"
+      Display: "&9Prevent Usage"
       Lore:
-        - "&7Das MapArt kann verwendet werden: "
-        - "&7<state>"
+        - "<state>"
+        - " "
+        - "&7Costs: &a<costs>"
     Exit:
-      Display: "&cAbbrechen"
+      Display: "&cCancel"
       Lore: []
+
+#The Lore your map will have
+MapArt:
+  Lore:
+    - " "
+    - "&8Creator: &a<player>"
+    - "&8Copyable: <craft_state>"
+    - "&8Usable: <use_state>"
+    - " "
+
+#Common used translations
+Language:
+  no_permission: "&4&l✘ &cYou don't have permission to perform that command"
+  no_mapart: "&4&l✘ &cThis is not a filled Map"
+  not_allowed: "&4&l✘ &cYou aren't allowed to use this map"
+  not_enough_money: "&4&l✘ &cYou don't have enough money"
+  inventory_full: "&4&l✘ &cYour inventory was full"
+  finish: "&bYou successfully patented your map!"
