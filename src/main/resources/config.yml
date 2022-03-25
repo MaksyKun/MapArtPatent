@@ -48,5 +48,6 @@ Language:
   no_mapart: "&4&l✘ &cThis is not a filled Map"
   not_allowed: "&4&l✘ &cYou aren't allowed to use this map"
   not_enough_money: "&4&l✘ &cYou don't have enough money"
+  already_patented: "&4&l✘ &cThis map is already protected!"
   inventory_full: "&4&l✘ &cYour inventory was full"
   finish: "&bYou successfully patented your map!"

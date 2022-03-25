@@ -29,6 +29,7 @@ public enum ConfigValue {
     LANG_NO_MAPART("Language.no_mapart"),
     LANG_NOT_ALLOWED("Language.not_allowed"),
     LANG_NOT_ENOUGH_MONEY("Language.not_enough_money"),
+    LANG_ALREADY_PATENTED("Language.already_patented"),
     LANG_INVENTORY_FULL("Language.inventory_full"),
     LANG_FINISH("Language.finish");
 

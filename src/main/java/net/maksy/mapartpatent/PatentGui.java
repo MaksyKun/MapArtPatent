@@ -190,6 +190,13 @@ public class PatentGui implements Listener {
             event.setCancelled(true);
             return;
         }
+
+        if(PersistentMetaData.hasNameSpaceString(item.getItemMeta(), KEY_OWNER)) {
+            player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_ALREADY_PATENTED)));
+            event.setCancelled(true);
+            return;
+        }
+
         if(mapArt == null) {
             mapArt = item.clone();
             mapArt.setAmount(1);
