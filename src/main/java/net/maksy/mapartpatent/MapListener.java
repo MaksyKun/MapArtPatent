@@ -1,18 +1,15 @@
 package net.maksy.mapartpatent;
 
 import io.papermc.paper.event.player.PlayerItemFrameChangeEvent;
-import net.kyori.adventure.text.Component;
 import net.maksy.mapartpatent.enums.ConfigValue;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftInventoryCartography;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -38,7 +35,6 @@ public class MapListener implements Listener {
 
         if (item.getType() != Material.FILLED_MAP || !PersistentMetaData.hasNameSpaceString(item.getItemMeta(), KEY_OWNER))
             return;
-
         if (PersistentMetaData.getNameSpaceInt(item.getItemMeta(), KEY_CRAFTABLE) == 1
                 && !event.getWhoClicked().getUniqueId().equals(UUID.fromString(Objects.requireNonNull(PersistentMetaData.getNameSpaceString(meta, KEY_OWNER))))) {
             event.getWhoClicked().sendMessage(MapArtPatent.getConfigManager().getDisplay(ConfigValue.getPath(LANG_NOT_ALLOWED)));
@@ -63,9 +59,7 @@ public class MapListener implements Listener {
 
     @EventHandler
     public void onUse(InventoryClickEvent event) {
-        Player player = (Player) event.getWhoClicked();
         ItemStack item = event.getCurrentItem();
-
         if(item == null)
             return;
         if(event.getInventory().getType() != InventoryType.CARTOGRAPHY)
@@ -75,7 +69,6 @@ public class MapListener implements Listener {
 
         if (item.getType() != Material.FILLED_MAP || !PersistentMetaData.hasNameSpaceString(item.getItemMeta(), KEY_OWNER))
             return;
-
         if (PersistentMetaData.getNameSpaceInt(item.getItemMeta(), KEY_CRAFTABLE) == 1
                 && !event.getWhoClicked().getUniqueId().equals(UUID.fromString(Objects.requireNonNull(PersistentMetaData.getNameSpaceString(meta, KEY_OWNER))))) {
             event.getWhoClicked().sendMessage(MapArtPatent.getConfigManager().getDisplay(ConfigValue.getPath(LANG_NOT_ALLOWED)));

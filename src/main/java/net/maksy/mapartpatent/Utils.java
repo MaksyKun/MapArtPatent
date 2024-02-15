@@ -5,7 +5,6 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -64,7 +63,7 @@ public class Utils {
     public static ItemStack getSkull(String texture, Component name, boolean glowing, List<Component> lore) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta itemMeta = (SkullMeta) item.getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "SkullItem");
         PropertyMap properties = profile.getProperties();
         Property property = new Property("textures", texture);
         properties.put("textures", property);

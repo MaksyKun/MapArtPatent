@@ -1,6 +1,5 @@
 package net.maksy.mapartpatent;
 
-import net.kyori.adventure.text.Component;
 import net.maksy.mapartpatent.enums.ConfigValue;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -47,12 +46,8 @@ public class PatentGui implements Listener {
     }
 
     public ItemStack confirmButton() {
-        boolean allowed = (craftable || usable);
-        String texture = allowed ?
-                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmE4ZjZiMTMxZWY4NDdkOTE2MGU1MTZhNmY0NGJmYTkzMjU1NGQ0MGMxOGE4MTc5NmQ3NjZhNTQ4N2I5ZjcxMCJ9fX0="
-                :
-                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTkxOWQxNTk0YmY4MDlkYjdiNDRiMzc4MmJmOTBhNjlmNDQ5YTg3Y2U1ZDE4Y2I0MGViNjUzZmRlYzI3MjIifX19";
-        return Utils.getSkull(texture, config.getDisplay(ConfigValue.getPath(BUTTON_CONFIRM_DISPLAY)), allowed, config.getLore(ConfigValue.getPath(BUTTON_CONFIRM_LORE), "<costs>", String.valueOf(costs), allowed));
+        String texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmE4ZjZiMTMxZWY4NDdkOTE2MGU1MTZhNmY0NGJmYTkzMjU1NGQ0MGMxOGE4MTc5NmQ3NjZhNTQ4N2I5ZjcxMCJ9fX0=";
+        return Utils.getSkull(texture, config.getDisplay(ConfigValue.getPath(BUTTON_CONFIRM_DISPLAY)), false, config.getLore(ConfigValue.getPath(BUTTON_CONFIRM_LORE), "<costs>", String.valueOf(costs), true));
     }
 
     public ItemStack insertButton() {
@@ -94,9 +89,9 @@ public class PatentGui implements Listener {
         if (slot < 27)
             event.setCancelled(true);
 
-        if(event.isShiftClick()) {
-               setMap(event);
-               return;
+        if (event.isShiftClick()) {
+            setMap(event);
+            return;
         }
 
         switch (slot) {
@@ -108,31 +103,31 @@ public class PatentGui implements Listener {
 
                 double balance = MapArtPatent.getEco().getBalance(player);
                 ItemStack newMapArt = mapArt.clone();
+                ItemMeta meta = newMapArt.getItemMeta();
+                PersistentMetaData.setNameSpace(meta, KEY_OWNER, player.getUniqueId().toString());
                 if (craftable || usable) {
                     if (balance < costs) {
                         player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_NOT_ENOUGH_MONEY)));
                         return;
                     }
-                    ItemMeta meta = newMapArt.getItemMeta();
-
-                    PersistentMetaData.setNameSpace(meta, KEY_OWNER, player.getUniqueId().toString());
                     if (craftable)
                         PersistentMetaData.setNameSpace(meta, KEY_CRAFTABLE, 1);
                     if (usable)
                         PersistentMetaData.setNameSpace(meta, KEY_USABLE, 1);
-
-                    newMapArt.setItemMeta(meta);
-
-                    if (!player.getInventory().addItem(config.getPatentedMapArt(player, newMapArt, craftable, usable)).isEmpty()) {
-                        player.getWorld().dropItem(player.getLocation(), newMapArt);
-                        player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_INVENTORY_FULL)));
-                    }
-
-                    MapArtPatent.getEco().withdrawPlayer(player, costs);
-                    mapArt = null;
-                    player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_FINISH)));
-                    player.closeInventory();
                 }
+                newMapArt.setItemMeta(meta);
+
+                if (!player.getInventory().addItem(config.getPatentedMapArt(player, newMapArt, craftable, usable)).isEmpty()) {
+                    player.getWorld().dropItem(player.getLocation(), newMapArt);
+                    player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_INVENTORY_FULL)));
+                }
+
+                if(costs > 0.0) {
+                    MapArtPatent.getEco().withdrawPlayer(player, costs);
+                }
+                mapArt = null;
+                player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_FINISH)));
+                player.closeInventory();
             }
             case 11 -> setMap(event);
             case 13 -> {
@@ -163,7 +158,7 @@ public class PatentGui implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        if(event.getInventory() != inventory)
+        if (event.getInventory() != inventory)
             return;
         reset();
         PatentGuiRegistry.get().unregister((Player) event.getPlayer());
@@ -178,7 +173,7 @@ public class PatentGui implements Listener {
     public void setMap(InventoryClickEvent event) {
         ItemStack item = event.getCursor();
 
-        if(event.isShiftClick()) {
+        if (event.isShiftClick()) {
             item = event.getCurrentItem();
             event.setCancelled(true);
         }
@@ -191,13 +186,13 @@ public class PatentGui implements Listener {
             return;
         }
 
-        if(PersistentMetaData.hasNameSpaceString(item.getItemMeta(), KEY_OWNER)) {
+        if (PersistentMetaData.hasNameSpaceString(item.getItemMeta(), KEY_OWNER)) {
             player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_ALREADY_PATENTED)));
             event.setCancelled(true);
             return;
         }
 
-        if(mapArt == null) {
+        if (mapArt == null) {
             mapArt = item.clone();
             mapArt.setAmount(1);
             inventory.setItem(11, mapArt);

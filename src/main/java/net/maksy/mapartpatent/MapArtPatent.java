@@ -1,12 +1,11 @@
 package net.maksy.mapartpatent;
 
+import net.maksy.mapartpatent.util.Metrics;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
-
-import static org.spigotmc.SpigotConfig.config;
 
 public final class MapArtPatent extends JavaPlugin {
 
@@ -22,6 +21,10 @@ public final class MapArtPatent extends JavaPlugin {
         setupEconomy();
         Objects.requireNonNull(getCommand("mapart")).setExecutor(new CommandHandler());
         getServer().getPluginManager().registerEvents(new MapListener(), this);
+
+        int pluginId = 14728;
+        Metrics metrics = new Metrics(this, pluginId);
+        metrics.addCustomChart(new Metrics.SimplePie("chart_id", () -> "My value"));
     }
 
     @Override
@@ -29,13 +32,12 @@ public final class MapArtPatent extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private boolean setupEconomy() {
+    private void setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             RegisteredServiceProvider<Economy> economy = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
             if (economy != null)
                 eco = economy.getProvider();
         }
-        return (eco != null);
     }
 
     public static JavaPlugin getInstance() { return instance; }
