@@ -1,6 +1,7 @@
 package net.maksy.mapartpatent;
 
 import net.maksy.mapartpatent.enums.ConfigValue;
+import net.maksy.mapartpatent.persistence.PersistentMetaData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,6 +29,7 @@ public class PatentGui implements Listener {
     String KEY_OWNER = "owner";
     String KEY_CRAFTABLE = "craftable";
     String KEY_USABLE = "usable";
+    String KEY_MAP_DATA = "mapview";
 
     public PatentGui(Player player) {
         this.player = player;
@@ -47,7 +49,7 @@ public class PatentGui implements Listener {
 
     public ItemStack confirmButton() {
         String texture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmE4ZjZiMTMxZWY4NDdkOTE2MGU1MTZhNmY0NGJmYTkzMjU1NGQ0MGMxOGE4MTc5NmQ3NjZhNTQ4N2I5ZjcxMCJ9fX0=";
-        return Utils.getSkull(texture, config.getDisplay(ConfigValue.getPath(BUTTON_CONFIRM_DISPLAY)), false, config.getLore(ConfigValue.getPath(BUTTON_CONFIRM_LORE), "<costs>", String.valueOf(costs), true));
+        return new ItemStack(Material.PLAYER_HEAD); //Utils.getSkull(texture, config.getDisplay(ConfigValue.getPath(BUTTON_CONFIRM_DISPLAY)), false, config.getLore(ConfigValue.getPath(BUTTON_CONFIRM_LORE), "<costs>", String.valueOf(costs), true));
     }
 
     public ItemStack insertButton() {
@@ -104,7 +106,14 @@ public class PatentGui implements Listener {
                 double balance = MapArtPatent.getEco().getBalance(player);
                 ItemStack newMapArt = mapArt.clone();
                 ItemMeta meta = newMapArt.getItemMeta();
+                byte[] image = Utils.captureMapImage(newMapArt);
+                if(image == null) {
+                    MapArtPatent.getInstance().getLogger().warning("Failed to capture image from map!");
+                    player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_NO_MAPART)));
+                    return;
+                }
                 PersistentMetaData.setNameSpace(meta, KEY_OWNER, player.getUniqueId().toString());
+                PersistentMetaData.setNameSpace(meta, KEY_MAP_DATA, image);
                 if (craftable || usable) {
                     if (balance < costs) {
                         player.sendMessage(config.getDisplay(ConfigValue.getPath(LANG_NOT_ENOUGH_MONEY)));
